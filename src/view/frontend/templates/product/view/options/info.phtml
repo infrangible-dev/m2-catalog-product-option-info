@@ -1,0 +1,32 @@
+<?php
+
+declare(strict_types=1);
+
+use Infrangible\CatalogProductOptionInfo\Block\Product\View\Options\Info;
+use Magento\Framework\View\TemplateEngine\Php;
+
+/**
+ * @author      Andreas Knollmann
+ * @copyright   2014-2025 Softwareentwicklung Andreas Knollmann
+ * @license     http://www.opensource.org/licenses/mit-license.php MIT
+ */
+
+/** @var Php $this */
+/** @var Info $block */
+
+$options = $block->getOptions();
+?>
+
+<?php foreach ($options as $option): ?>
+    <?= $block->getOptionInfoHtml($option); ?>
+<?php endforeach; ?>
+
+<script type="text/x-magento-init">
+    {
+        "#product-options-wrapper": {
+            "productOptionsInfo": {
+                "info": <?= /* @noEscape */ $block->getOptionsConfig(); ?>
+            }
+        }
+    }
+</script>

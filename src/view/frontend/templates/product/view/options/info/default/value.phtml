@@ -1,0 +1,25 @@
+<?php
+
+declare(strict_types=1);
+
+use Infrangible\CatalogProductOptionInfo\Block\Product\View\Options\Info\DefaultType\Value;
+use Magento\Framework\View\TemplateEngine\Php;
+
+/**
+ * @author      Andreas Knollmann
+ * @copyright   2014-2025 Softwareentwicklung Andreas Knollmann
+ * @license     http://www.opensource.org/licenses/mit-license.php MIT
+ */
+
+/** @var Php $this */
+/** @var Value $block */
+
+$optionValue = $block->getOptionValue();
+?>
+
+<?php if ($block->hasInfo()): ?>
+    <div class="option-value-info" id="option-value-info-<?= $optionValue->getOptionId(); ?>-<?= $optionValue->getId(); ?>" style="background: url('<?= $optionValue->getData('image'); ?>')">
+        <label><?= $optionValue->getData('headline'); ?></label>
+        <p><?= $optionValue->getData('description'); ?></p>
+    </div>
+<?php endif; ?>

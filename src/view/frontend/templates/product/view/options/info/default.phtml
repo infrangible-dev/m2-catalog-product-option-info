@@ -1,0 +1,33 @@
+<?php
+
+declare(strict_types=1);
+
+use Infrangible\CatalogProductOptionInfo\Block\Product\View\Options\Info\DefaultType;
+use Magento\Framework\View\TemplateEngine\Php;
+
+/**
+ * @author      Andreas Knollmann
+ * @copyright   2014-2025 Softwareentwicklung Andreas Knollmann
+ * @license     http://www.opensource.org/licenses/mit-license.php MIT
+ */
+
+/** @var Php $this */
+/** @var DefaultType $block */
+
+$option = $block->getOption();
+$optionValues = $option->getValues();
+?>
+
+<?php if ($block->hasInfo()): ?>
+    <div class="option-info" id="option-info-<?= $option->getId(); ?>" style="background: url('<?= $option->getData('image'); ?>')">
+        <label><?= $option->getData('headline'); ?></label>
+        <p><?= $option->getData('description'); ?></p>
+    </div>
+<?php endif; ?>
+
+<?php if ($optionValues !== null): ?>
+    <?php foreach ($optionValues as $optionValue): ?>
+        <?= $block->getOptionValueInfoHtml($optionValue); ?>
+    <?php endforeach; ?>
+<?php endif; ?>
+

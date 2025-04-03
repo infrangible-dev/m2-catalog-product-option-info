@@ -1,0 +1,94 @@
+/**
+ * @author      Andreas Knollmann
+ * @copyright   2014-2025 Softwareentwicklung Andreas Knollmann
+ * @license     http://www.opensource.org/licenses/mit-license.php MIT
+ */
+
+& when (@media-common = true) {
+    #product-options-wrapper {
+        .field {
+            label {
+                span.info {
+                    cursor: help;
+                }
+            }
+
+            > .control {
+                select {
+                    option.info {
+                        cursor: help;
+                    }
+                }
+            }
+        }
+
+        .field.date {
+            legend {
+                span.info {
+                    cursor: help;
+                }
+            }
+        }
+
+        .fieldset {
+            .field-wrapper {
+                .lib-form-field();
+
+                > .field,
+                > .fields > .field {
+                    .lib-form-field();
+
+                    &.no-label {
+                        > .label {
+                            .lib-visually-hidden();
+                        }
+                    }
+
+                    &.choice {
+                        .label {
+                            display: inline;
+                            font-weight: normal;
+                            margin: 0;
+                        }
+                    }
+
+                    .label {
+                        .column:not(.main) & {
+                            font-weight: normal;
+                        }
+                    }
+
+                    .field.choice {
+                        margin-bottom: @indent__s;
+
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+
+                > .mage-dropdown-dialog {
+                    position: relative;
+
+                    > .option-info {
+                        position: absolute;
+                        border: 1px solid #cccccc;
+                        margin: 0;
+                        padding: 10px;
+                        z-index: 9999;
+                        left: -40px;
+                        top: -40px;
+
+                        label {
+                            font-weight: 600;
+                        }
+
+                        p {
+                            margin: 10px 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
