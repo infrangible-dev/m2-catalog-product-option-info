@@ -18,8 +18,10 @@ $optionValue = $block->getOptionValue();
 ?>
 
 <?php if ($block->hasInfo()): ?>
-    <div class="option-value-info" id="option-value-info-<?= $optionValue->getOptionId(); ?>-<?= $optionValue->getId(); ?>" style="background: url('<?= $optionValue->getData('image'); ?>')">
-        <label><?= $optionValue->getData('headline'); ?></label>
-        <p><?= $optionValue->getData('description'); ?></p>
+    <div class="option-value-info" id="option-value-info-<?= $optionValue->getOptionId(); ?>-<?= $optionValue->getId(); ?>" style="display: none; background: url('<?= $optionValue->getData('image'); ?>')">
+        <div class="option-value-info-content">
+            <label><?= $optionValue->getData('headline'); ?></label>
+            <p><?= $optionValue->getData('description'); ?></p>
+        </div>
     </div>
 <?php endif; ?>

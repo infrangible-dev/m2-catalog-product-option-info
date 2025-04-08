@@ -19,9 +19,11 @@ $optionValues = $option->getValues();
 ?>
 
 <?php if ($block->hasInfo()): ?>
-    <div class="option-info" id="option-info-<?= $option->getId(); ?>" style="background: url('<?= $option->getData('image'); ?>')">
-        <label><?= $option->getData('headline'); ?></label>
-        <p><?= $option->getData('description'); ?></p>
+    <div class="option-info" id="option-info-<?= $option->getId(); ?>" style="display: none; background: url('<?= $option->getData('image'); ?>')">
+        <div class="option-info-content">
+            <label><?= $option->getData('headline'); ?></label>
+            <p><?= $option->getData('description'); ?></p>
+        </div>
     </div>
 <?php endif; ?>
 

@@ -35,9 +35,11 @@ define([
                         var infoContent = $('#option-info-' + optionId);
 
                         if (infoContent.length > 0) {
+                            infoTrigger.addClass('product-option-info-trigger');
+
                             infoContent.dropdownDialog({
                                 appendTo: '[data-option-id=' + optionId + ']',
-                                triggerTarget: identifier,
+                                triggerTarget: '[data-option-id=' + optionId + '] .product-option-info-trigger',
                                 triggerEvent: 'mouseenter',
                                 timeout: 0,
                                 closeOnMouseLeave: true,
@@ -45,65 +47,107 @@ define([
                                 triggerClass: 'active',
                                 buttons: []
                             });
-
-                            infoTrigger.addClass('info');
                         }
                     });
                 });
 
-                $.each(self.getValueInfoIdentifier(), function (index, identifier) {
-                    var infoElements = $(identifier);
+                $('#product-options-wrapper div.field select').each(function() {
+                    var optionSelectElement = $(this);
+                    var optionWrapper = optionSelectElement.closest('.field-wrapper');
+                    var optionId = optionWrapper.data('option-id');
 
-                    infoElements.each(function () {
-                        var infoTrigger = $(this);
-                        var optionWrapper = infoTrigger.closest('.field-wrapper');
-                        var optionId = optionWrapper.data('option-id');
-                        var optionValueId = infoTrigger.val();
+                    optionSelectElement.on('select2:open', function (event) {
+                        var select = $(event.target);
+
+                        setTimeout(function(){
+                            select.parent().find('.select2-container .select2-results ul li').each(function() {
+                                var optionValueElement = $(this);
+                                var optionElementId = optionValueElement.data('select2-id');
+
+                                if (optionElementId.indexOf('result') !== -1) {
+                                    var optionValueId = optionElementId.substring(optionElementId.lastIndexOf('-') + 1);
+
+                                    var infoContent = $('#option-value-info-' + optionId + '-' + optionValueId);
+
+                                    if (infoContent.length > 0) {
+                                        optionValueElement.addClass('product-option-info-trigger');
+
+                                        infoContent.dropdownDialog({
+                                            appendTo: '[data-option-id=' + optionId + '] .field .control',
+                                            triggerEvent: 'mouseenter',
+                                            timeout: 0,
+                                            closeOnMouseLeave: true,
+                                            closeOnEscape: true,
+                                            triggerClass: 'active',
+                                            buttons: []
+                                        });
+
+                                        optionValueElement.on('mouseenter', function() {
+                                            infoContent.dropdownDialog('open');
+                                        });
+
+                                        optionValueElement.on('mouseleave', function() {
+                                            infoContent.dropdownDialog('close');
+                                        });
+
+                                        optionSelectElement.on('select2:select', function() {
+                                            infoContent.dropdownDialog('close');
+                                        });
+                                    }
+                                }
+                            });
+                            select.parent().find('.select2-container .select2-results ul li');
+                        }, 250);
+                    });
+                });
+
+                $('#product-options-wrapper div.field div.options-list div.field.choice').each(function() {
+                    var optionSelectElement = $(this);
+                    var optionWrapper = optionSelectElement.closest('.field-wrapper');
+                    var optionId = optionWrapper.data('option-id');
+
+                    if (optionId) {
+                        var optionValueId = null;
+
+                        var radioButtonElement = optionSelectElement.find('input[type="radio"]');
+                        if (radioButtonElement.length > 0) {
+                            optionValueId = radioButtonElement.val();
+                        }
+
+                        var checkboxButtonElement = optionSelectElement.find('input[type="checkbox"]');
+                        if (checkboxButtonElement.length > 0) {
+                            optionValueId = checkboxButtonElement.val();
+                        }
 
                         if (optionValueId) {
                             var infoContent = $('#option-value-info-' + optionId + '-' + optionValueId);
 
                             if (infoContent.length > 0) {
-                                var triggerTargetIdentifier;
+                                infoContent.dropdownDialog({
+                                    appendTo: '[data-option-id=' + optionId + '] .field .control',
+                                    triggerTarget: optionSelectElement,
+                                    triggerEvent: 'mouseenter',
+                                    timeout: 0,
+                                    closeOnMouseLeave: true,
+                                    closeOnEscape: true,
+                                    triggerClass: 'active',
+                                    buttons: []
+                                });
 
-                                if (infoTrigger.prop('nodeName') === 'OPTION') {
-                                    triggerTargetIdentifier = '#product-option-' + optionId +
-                                        ' select option[value=' + optionValueId + ']';
-                                }
-
-                                if (triggerTargetIdentifier) {
-                                    infoContent.dropdownDialog({
-                                        appendTo: '[data-option-id=' + optionId + ']',
-                                        triggerTarget: triggerTargetIdentifier,
-                                        triggerEvent: 'mouseover',
-                                        timeout: 0,
-                                        closeOnMouseLeave: true,
-                                        closeOnEscape: true,
-                                        triggerClass: 'active',
-                                        buttons: []
-                                    });
-
-                                    infoTrigger.addClass('info');
-                                }
+                                $(optionSelectElement).addClass('product-option-info-trigger');
                             }
                         }
-                    });
+                    }
                 });
             });
         },
 
         getInfoIdentifier: function getInfoIdentifier() {
             return [
-                '#product-options-wrapper div.field label span',
-                '#product-options-wrapper div.field.date legend span'
+                '#product-options-wrapper div.field >label >span',
+                '#product-options-wrapper div.field.date >fieldset >legend >span'
             ];
-        },
-
-        getValueInfoIdentifier: function getInfoIdentifier() {
-            return [
-                '#product-options-wrapper div.field select option'
-            ];
-        },
+        }
     });
 
     return $.mage.productOptionsInfo;

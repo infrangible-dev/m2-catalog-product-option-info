@@ -8,15 +8,25 @@
     #product-options-wrapper {
         .field {
             label {
-                span.info {
+                span.product-option-info-trigger {
                     cursor: help;
                 }
             }
 
             > .control {
                 select {
-                    option.info {
+                    option.product-option-info-trigger {
                         cursor: help;
+                    }
+                }
+
+                .select2-container {
+                    .select2-results {
+                        ul {
+                            li.product-option-info-trigger {
+                                cursor: help;
+                            }
+                        }
                     }
                 }
             }
@@ -24,7 +34,7 @@
 
         .field.date {
             legend {
-                span.info {
+                span.product-option-info-trigger {
                     cursor: help;
                 }
             }
@@ -66,18 +76,25 @@
                         }
                     }
                 }
+            }
 
-                > .mage-dropdown-dialog {
-                    position: relative;
+            .mage-dropdown-dialog {
+                position: relative;
 
-                    > .option-info {
+                > .option-info, > .option-value-info {
+                    position: absolute;
+                    border: 1px solid #cccccc;
+                    margin: 0;
+                    padding: 10px;
+                    z-index: 9999;
+                    width: 234px;
+                    min-height: 234px;
+                    left: -275px;
+
+                    > .option-info-content, > .option-value-info-content {
                         position: absolute;
-                        border: 1px solid #cccccc;
-                        margin: 0;
-                        padding: 10px;
-                        z-index: 9999;
-                        left: -40px;
-                        top: -40px;
+                        left: 10px;
+                        bottom: 0;
 
                         label {
                             font-weight: 600;
@@ -87,6 +104,14 @@
                             margin: 10px 0;
                         }
                     }
+                }
+
+                > .option-info {
+                    top: -60px;
+                }
+
+                > .option-value-info {
+                    top: -40px;
                 }
             }
         }
