@@ -6,6 +6,12 @@
  * @license     http://www.opensource.org/licenses/mit-license.php MIT
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="core_collection_abstract_load_after">
+        <observer name="infrangible_catalogproductoptioninfo" instance="Infrangible\CatalogProductOptionInfo\Observer\CoreCollectionAbstractLoadAfter"/>
+    </event>
+    <event name="model_load_after">
+        <observer name="infrangible_catalogproductoptioninfo" instance="Infrangible\CatalogProductOptionInfo\Observer\ModelLoadAfter"/>
+    </event>
     <event name="model_save_after">
         <observer name="infrangible_catalogproductoptioninfo" instance="Infrangible\CatalogProductOptionInfo\Observer\ModelSaveAfter"/>
     </event>

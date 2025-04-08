@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Infrangible\CatalogProductOptionInfo\Observer;
 
 use FeWeDev\Base\Arrays;
+use FeWeDev\Base\Json;
 use FeWeDev\Base\Variables;
 use Infrangible\Core\Helper\Database;
 use Magento\Catalog\Model\Product\Option;
@@ -29,11 +30,15 @@ class ModelSaveAfter implements ObserverInterface
     /** @var Variables */
     protected $variables;
 
-    public function __construct(Database $databaseHelper, Arrays $arrays, Variables $variables)
+    /** @var Json */
+    protected $json;
+
+    public function __construct(Database $databaseHelper, Arrays $arrays, Variables $variables, Json $json)
     {
         $this->databaseHelper = $databaseHelper;
         $this->arrays = $arrays;
         $this->variables = $variables;
+        $this->json = $json;
     }
 
     /**
@@ -170,6 +175,14 @@ class ModelSaveAfter implements ObserverInterface
 
             if ($this->variables->isEmpty($image)) {
                 $image = null;
+            }
+
+            if (is_array($image)) {
+                if (! $this->arrays->isAssociative($image)) {
+                    $image = reset($image);
+                }
+
+                $image = $this->json->encode($image);
             }
 
             $isDeleteRecord =
