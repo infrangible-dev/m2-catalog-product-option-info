@@ -8,6 +8,7 @@ use FeWeDev\Base\Arrays;
 use FeWeDev\Base\Json;
 use FeWeDev\Base\Variables;
 use Infrangible\Core\Helper\Database;
+use Infrangible\Core\Helper\Stores;
 use Magento\Catalog\Model\Product\Option;
 use Magento\Catalog\Model\Product\Option\Value;
 use Magento\Framework\Event\Observer;
@@ -33,12 +34,21 @@ class ModelSaveAfter implements ObserverInterface
     /** @var Json */
     protected $json;
 
-    public function __construct(Database $databaseHelper, Arrays $arrays, Variables $variables, Json $json)
-    {
+    /** @var Stores */
+    protected $storeHelper;
+
+    public function __construct(
+        Database $databaseHelper,
+        Arrays $arrays,
+        Variables $variables,
+        Json $json,
+        Stores $storeHelper
+    ) {
         $this->databaseHelper = $databaseHelper;
         $this->arrays = $arrays;
         $this->variables = $variables;
         $this->json = $json;
+        $this->storeHelper = $storeHelper;
     }
 
     /**
@@ -65,6 +75,40 @@ class ModelSaveAfter implements ObserverInterface
 
             if ($this->variables->isEmpty($image)) {
                 $image = null;
+            }
+
+            if (is_array($image)) {
+                if (! $this->arrays->isAssociative($image)) {
+                    $image = reset($image);
+                }
+
+                $urlFilter = filter_var(
+                    $image[ 'url' ],
+                    FILTER_VALIDATE_URL
+                );
+
+                if ($urlFilter === false) {
+                    if (array_key_exists(
+                        'full_path',
+                        $image
+                    )) {
+                        $fullPath = $image[ 'full_path' ];
+                    } else {
+                        $fullPath = substr(
+                            $image[ 'url' ],
+                            strpos(
+                                $image[ 'url' ],
+                                'wysiwyg/'
+                            )
+                        );
+
+                        $image[ 'full_path' ] = $fullPath;
+                    }
+
+                    $image[ 'url' ] = $this->storeHelper->getMediaUrl() . $fullPath;
+                }
+
+                $image = $this->json->encode($image);
             }
 
             $isDeleteRecord =
@@ -180,6 +224,32 @@ class ModelSaveAfter implements ObserverInterface
             if (is_array($image)) {
                 if (! $this->arrays->isAssociative($image)) {
                     $image = reset($image);
+                }
+
+                $urlFilter = filter_var(
+                    $image[ 'url' ],
+                    FILTER_VALIDATE_URL
+                );
+
+                if ($urlFilter === false) {
+                    if (array_key_exists(
+                        'full_path',
+                        $image
+                    )) {
+                        $fullPath = $image[ 'full_path' ];
+                    } else {
+                        $fullPath = substr(
+                            $image[ 'url' ],
+                            strpos(
+                                $image[ 'url' ],
+                                'wysiwyg/'
+                            )
+                        );
+
+                        $image[ 'full_path' ] = $fullPath;
+                    }
+
+                    $image[ 'url' ] = $this->storeHelper->getMediaUrl() . $fullPath;
                 }
 
                 $image = $this->json->encode($image);
