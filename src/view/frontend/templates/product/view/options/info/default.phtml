@@ -21,7 +21,7 @@ $optionValues = $option->getValues();
 <?php if ($block->hasInfo()): ?>
     <div class="option-info"
          id="option-info-<?= $option->getId(); ?>"
-         style="display: none; <?php if ($option->getData('image')): ?>background: url('<?= $option->getData('image')[0]['url']; ?>');<?php endif; ?>">
+         style="display: none; <?php if ($option->getData('image')): ?>background-image: url('<?= $option->getData('image')[0]['url']; ?>');<?php endif; ?>">
         <div class="option-info-content">
             <label><?= $option->getData('headline'); ?></label>
             <p><?= $option->getData('description'); ?></p>
