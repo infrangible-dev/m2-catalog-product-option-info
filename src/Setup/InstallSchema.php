@@ -35,7 +35,7 @@ class InstallSchema implements InstallSchemaInterface
     /**
      * @throws \Exception
      */
-    protected function addOptionInfoTable(AdapterInterface $connection): void
+    private function addOptionInfoTable(AdapterInterface $connection): void
     {
         $optionInfoTableName = $connection->getTableName('catalog_product_option_info');
 
@@ -115,7 +115,7 @@ class InstallSchema implements InstallSchemaInterface
     /**
      * @throws \Exception
      */
-    protected function addOptionValueInfoTable(AdapterInterface $connection): void
+    private function addOptionValueInfoTable(AdapterInterface $connection): void
     {
         $optionValueInfoTableName = $connection->getTableName('catalog_product_option_type_info');
 

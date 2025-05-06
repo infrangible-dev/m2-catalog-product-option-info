@@ -12,7 +12,6 @@ define([
     'use strict';
 
     var globalOptions = {
-        info: {}
     };
 
     $.widget('mage.productOptionsInfo', {

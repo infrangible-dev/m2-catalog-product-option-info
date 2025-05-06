@@ -67,11 +67,4 @@ class Info extends Template
 
         return $renderer->toHtml();
     }
-
-    public function getOptionsConfig(): string
-    {
-        //return $this->getProduct()->getOptions();
-
-        return '{}';
-    }
 }
