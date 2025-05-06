@@ -158,7 +158,7 @@ class CustomOptions
             'arguments' => [
                 'data' => [
                     'config' => [
-                        'label'         => __('Headline'),
+                        'label'         => __('Info Headline'),
                         'componentType' => Field::NAME,
                         'formElement'   => Input::NAME,
                         'dataScope'     => static::FIELD_HEADLINE_NAME,
@@ -176,7 +176,7 @@ class CustomOptions
             'arguments' => [
                 'data' => [
                     'config' => [
-                        'label'         => __('Description'),
+                        'label'         => __('Info Description'),
                         'componentType' => Field::NAME,
                         'formElement'   => Input::NAME,
                         'dataScope'     => static::FIELD_DESCRIPTION_NAME,
@@ -194,7 +194,7 @@ class CustomOptions
             'arguments' => [
                 'data' => [
                     'config' => [
-                        'label'          => __('Image'),
+                        'label'          => __('Info Image'),
                         'componentType'  => Field::NAME,
                         'dataScope'      => static::FIELD_IMAGE_NAME,
                         'dataType'       => Text::NAME,
