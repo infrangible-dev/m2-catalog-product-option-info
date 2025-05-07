@@ -238,12 +238,18 @@ class ModelSaveAfter implements ObserverInterface
                     )) {
                         $fullPath = $image[ 'full_path' ];
                     } else {
+                        $pathPosition = strpos(
+                            $image[ 'url' ],
+                            'wysiwyg/'
+                        );
+
+                        if ($pathPosition === false) {
+                            throw new \Exception('Option image url not in wysiwyg');
+                        }
+
                         $fullPath = substr(
                             $image[ 'url' ],
-                            strpos(
-                                $image[ 'url' ],
-                                'wysiwyg/'
-                            )
+                            $pathPosition
                         );
 
                         $image[ 'full_path' ] = $fullPath;
