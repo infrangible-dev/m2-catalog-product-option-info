@@ -194,17 +194,18 @@ class CustomOptions
             'arguments' => [
                 'data' => [
                     'config' => [
-                        'label'          => __('Info Image'),
-                        'componentType'  => Field::NAME,
-                        'dataScope'      => static::FIELD_IMAGE_NAME,
-                        'dataType'       => Text::NAME,
-                        'sortOrder'      => $sortOrder,
-                        'formElement'    => 'imageUploader',
-                        'elementTmpl'    => 'ui/form/element/uploader/uploader',
-                        'previewTmpl'    => 'Magento_Catalog/image-preview',
-                        'uploaderConfig' => [
+                        'label'             => __('Info Image'),
+                        'componentType'     => Field::NAME,
+                        'dataScope'         => static::FIELD_IMAGE_NAME,
+                        'dataType'          => Text::NAME,
+                        'sortOrder'         => $sortOrder,
+                        'formElement'       => 'imageUploader',
+                        'elementTmpl'       => 'ui/form/element/uploader/uploader',
+                        'previewTmpl'       => 'Magento_Catalog/image-preview',
+                        'uploaderConfig'    => [
                             'url' => 'product_option_info/image/upload'
-                        ]
+                        ],
+                        'additionalClasses' => 'catalog-product-option-info-image'
                     ]
                 ]
             ]
