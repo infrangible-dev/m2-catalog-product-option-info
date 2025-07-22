@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Infrangible\CatalogProductOptionInfo\Helper;
 
+use Magento\Catalog\Model\Product\Option;
 use Magento\Catalog\Model\ResourceModel\Product\Option\Collection;
+use Magento\Framework\View\Element\AbstractBlock;
 use Magento\Store\Model\Store;
 
 /**
@@ -148,5 +150,23 @@ class Data
             'info',
             true
         );
+    }
+
+    public function getOptionInfoHtml(AbstractBlock $block, Option $option): string
+    {
+        $type = $option->getGroupByType($option->getType());
+
+        $renderer = $block->getChildBlock($type);
+
+        if (! $renderer) {
+            $renderer = $block->getChildBlock('default');
+        }
+
+        $renderer->setData(
+            'option',
+            $option
+        );
+
+        return $renderer->toHtml();
     }
 }

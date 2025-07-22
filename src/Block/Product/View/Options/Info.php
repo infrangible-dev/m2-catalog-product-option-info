@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Infrangible\CatalogProductOptionInfo\Block\Product\View\Options;
 
+use Infrangible\CatalogProductOptionInfo\Helper\Data;
 use Infrangible\Core\Helper\Registry;
+use LogicException;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\Product\Option;
 use Magento\Framework\View\Element\Template;
@@ -19,10 +21,13 @@ class Info extends Template
     /** @var Registry */
     protected $registryHelper;
 
+    /** @var Data */
+    protected $helper;
+
     /** @var Product */
     private $product;
 
-    public function __construct(Template\Context $context, Registry $registryHelper, array $data = [])
+    public function __construct(Template\Context $context, Registry $registryHelper, Data $helper, array $data = [])
     {
         parent::__construct(
             $context,
@@ -30,6 +35,7 @@ class Info extends Template
         );
 
         $this->registryHelper = $registryHelper;
+        $this->helper = $helper;
     }
 
     public function getProduct(): Product
@@ -38,7 +44,7 @@ class Info extends Template
             if ($this->registryHelper->registry('current_product')) {
                 $this->product = $this->registryHelper->registry('current_product');
             } else {
-                throw new \LogicException('Product is not defined');
+                throw new LogicException('Product is not defined');
             }
         }
 
@@ -52,19 +58,9 @@ class Info extends Template
 
     public function getOptionInfoHtml(Option $option): string
     {
-        $type = $option->getGroupByType($option->getType());
-
-        $renderer = $this->getChildBlock($type);
-
-        if (! $renderer) {
-            $renderer = $this->getChildBlock('default');
-        }
-
-        $renderer->setData(
-            'option',
+        return $this->helper->getOptionInfoHtml(
+            $this,
             $option
         );
-
-        return $renderer->toHtml();
     }
 }

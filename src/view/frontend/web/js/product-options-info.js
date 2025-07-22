@@ -12,6 +12,10 @@ define([
     'use strict';
 
     var globalOptions = {
+        infoLabelIdentifier: [
+            'div.field >label >span',
+            'div.field.date >fieldset >legend >span'
+        ]
     };
 
     $.widget('mage.productOptionsInfo', {
@@ -24,14 +28,14 @@ define([
             var self = this;
 
             domReady(function() {
-                $.each(self.getInfoIdentifier(), function (index, identifier) {
-                    var infoElements = $(identifier);
+                $.each(self.getInfoLabelIdentifier(), function (index, identifier) {
+                    var infoElements = $(identifier, self.element);
 
                     infoElements.each(function () {
                         var infoTrigger = $(this);
                         var optionWrapper = infoTrigger.closest('.field-wrapper');
                         var optionId = optionWrapper.data('option-id');
-                        var infoContent = $('#option-info-' + optionId);
+                        var infoContent = $('#option-info-' + optionId, self.element);
 
                         if (infoContent.length > 0) {
                             infoTrigger.addClass('product-option-info-trigger');
@@ -50,7 +54,7 @@ define([
                     });
                 });
 
-                $('#product-options-wrapper div.field select').each(function() {
+                $('div.field select', self.element).each(function() {
                     var optionSelectElement = $(this);
                     var optionWrapper = optionSelectElement.closest('.field-wrapper');
                     var optionId = optionWrapper.data('option-id');
@@ -66,7 +70,8 @@ define([
                                 if (optionElementId.indexOf('result') !== -1) {
                                     var optionValueId = optionElementId.substring(optionElementId.lastIndexOf('-') + 1);
 
-                                    var infoContent = $('#option-value-info-' + optionId + '-' + optionValueId);
+                                    var infoContent =
+                                        $('#option-value-info-' + optionId + '-' + optionValueId, self.element);
 
                                     if (infoContent.length > 0) {
                                         optionValueElement.addClass('product-option-info-trigger');
@@ -100,7 +105,7 @@ define([
                     });
                 });
 
-                $('#product-options-wrapper div.field div.options-list div.field.choice').each(function() {
+                $('div.field div.options-list div.field.choice', self.element).each(function() {
                     var optionSelectElement = $(this);
                     var optionWrapper = optionSelectElement.closest('.field-wrapper');
                     var optionId = optionWrapper.data('option-id');
@@ -119,7 +124,7 @@ define([
                         }
 
                         if (optionValueId) {
-                            var infoContent = $('#option-value-info-' + optionId + '-' + optionValueId);
+                            var infoContent = $('#option-value-info-' + optionId + '-' + optionValueId, self.element);
 
                             if (infoContent.length > 0) {
                                 infoContent.dropdownDialog({
@@ -133,7 +138,7 @@ define([
                                     buttons: []
                                 });
 
-                                $(optionSelectElement).addClass('product-option-info-trigger');
+                                optionSelectElement.addClass('product-option-info-trigger');
                             }
                         }
                     }
@@ -141,11 +146,8 @@ define([
             });
         },
 
-        getInfoIdentifier: function getInfoIdentifier() {
-            return [
-                '#product-options-wrapper div.field >label >span',
-                '#product-options-wrapper div.field.date >fieldset >legend >span'
-            ];
+        getInfoLabelIdentifier: function getInfoLabelIdentifier() {
+            return this.options.infoLabelIdentifier;
         }
     });
 
