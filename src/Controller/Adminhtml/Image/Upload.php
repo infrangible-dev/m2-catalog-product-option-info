@@ -71,6 +71,11 @@ class Upload extends Json
                                         $_FILES[ $fileId ][ $key ] = $value[ 'image' ];
                                     }
                                 }
+                            } elseif (array_key_exists(
+                                'image',
+                                $options
+                            )) {
+                                $_FILES[ $fileId ][ $key ] = $options[ 'image' ];
                             }
                         }
                     }
@@ -90,14 +95,14 @@ class Upload extends Json
 
             $this->setResponseValues(
                 [
-                    'name' => basename($imageName),
+                    'name'      => basename($imageName),
                     'full_path' => $imageName,
-                    'type' => $result[ 'type' ],
-                    'tmp_name' => $imageName,
-                    'error' => $result[ 'error' ],
-                    'size' => $result[ 'size' ],
-                    'file' => basename($imageName),
-                    'url' => $this->storeHelper->getMediaUrl() . $imageName,
+                    'type'      => $result[ 'type' ],
+                    'tmp_name'  => $imageName,
+                    'error'     => $result[ 'error' ],
+                    'size'      => $result[ 'size' ],
+                    'file'      => basename($imageName),
+                    'url'       => $this->storeHelper->getMediaUrl() . $imageName,
                 ]
             );
         } catch (LocalizedException $exception) {
