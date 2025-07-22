@@ -12,6 +12,8 @@ define([
     'use strict';
 
     var globalOptions = {
+        elementIdentifier: null,
+        infoContainerIdentifier: null,
         infoLabelIdentifier: [
             'div.field >label >span',
             'div.field.date >fieldset >legend >span'
@@ -27,15 +29,27 @@ define([
         _init: function initProductOptionsInfo() {
             var self = this;
 
+            var elementIdentifier = self.options.elementIdentifier;
+
+            if (elementIdentifier === null) {
+                elementIdentifier = self.element;
+            }
+
+            var infoContainerIdentifier = self.options.infoContainerIdentifier;
+
+            if (infoContainerIdentifier === null) {
+                infoContainerIdentifier = self.element;
+            }
+
             domReady(function() {
                 $.each(self.getInfoLabelIdentifier(), function (index, identifier) {
-                    var infoElements = $(identifier, self.element);
+                    var infoElements = $(identifier, elementIdentifier);
 
                     infoElements.each(function () {
                         var infoTrigger = $(this);
                         var optionWrapper = infoTrigger.closest('.field-wrapper');
                         var optionId = optionWrapper.data('option-id');
-                        var infoContent = $('#option-info-' + optionId, self.element);
+                        var infoContent = $('#option-info-' + optionId, infoContainerIdentifier);
 
                         if (infoContent.length > 0) {
                             infoTrigger.addClass('product-option-info-trigger');
@@ -54,7 +68,7 @@ define([
                     });
                 });
 
-                $('div.field select', self.element).each(function() {
+                $('div.field select', elementIdentifier).each(function() {
                     var optionSelectElement = $(this);
                     var optionWrapper = optionSelectElement.closest('.field-wrapper');
                     var optionId = optionWrapper.data('option-id');
@@ -70,8 +84,8 @@ define([
                                 if (optionElementId.indexOf('result') !== -1) {
                                     var optionValueId = optionElementId.substring(optionElementId.lastIndexOf('-') + 1);
 
-                                    var infoContent =
-                                        $('#option-value-info-' + optionId + '-' + optionValueId, self.element);
+                                    var infoContent = $('#option-value-info-' + optionId + '-' + optionValueId,
+                                        infoContainerIdentifier);
 
                                     if (infoContent.length > 0) {
                                         optionValueElement.addClass('product-option-info-trigger');
@@ -105,7 +119,7 @@ define([
                     });
                 });
 
-                $('div.field div.options-list div.field.choice', self.element).each(function() {
+                $('div.field div.options-list div.field.choice', elementIdentifier).each(function() {
                     var optionSelectElement = $(this);
                     var optionWrapper = optionSelectElement.closest('.field-wrapper');
                     var optionId = optionWrapper.data('option-id');
@@ -124,7 +138,8 @@ define([
                         }
 
                         if (optionValueId) {
-                            var infoContent = $('#option-value-info-' + optionId + '-' + optionValueId, self.element);
+                            var infoContent = $('#option-value-info-' + optionId + '-' + optionValueId,
+                                infoContainerIdentifier);
 
                             if (infoContent.length > 0) {
                                 infoContent.dropdownDialog({
