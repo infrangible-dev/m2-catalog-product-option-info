@@ -4,7 +4,7 @@
  * @license     http://www.opensource.org/licenses/mit-license.php MIT
  */
 
-var config = {
+const config = {
     map: {
         '*': {
             productOptionsInfo: 'Infrangible_CatalogProductOptionInfo/js/product-options-info',

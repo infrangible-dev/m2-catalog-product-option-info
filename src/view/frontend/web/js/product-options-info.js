@@ -11,7 +11,7 @@ define([
 ], function ($, domReady) {
     'use strict';
 
-    var globalOptions = {
+    const globalOptions = {
         elementIdentifier: null,
         infoContainerIdentifier: null,
         infoLabelIdentifier: [
@@ -27,15 +27,15 @@ define([
         },
 
         _init: function initProductOptionsInfo() {
-            var self = this;
+            const self = this;
 
-            var elementIdentifier = self.options.elementIdentifier;
+            let elementIdentifier = self.options.elementIdentifier;
 
             if (elementIdentifier === null) {
                 elementIdentifier = self.element;
             }
 
-            var infoContainerIdentifier = self.options.infoContainerIdentifier;
+            let infoContainerIdentifier = self.options.infoContainerIdentifier;
 
             if (infoContainerIdentifier === null) {
                 infoContainerIdentifier = self.element;
@@ -43,13 +43,13 @@ define([
 
             domReady(function() {
                 $.each(self.getInfoLabelIdentifier(), function (index, identifier) {
-                    var infoElements = $(identifier, elementIdentifier);
+                    const infoElements = $(identifier, elementIdentifier);
 
                     infoElements.each(function () {
-                        var infoTrigger = $(this);
-                        var optionWrapper = infoTrigger.closest('.field-wrapper');
-                        var optionId = optionWrapper.data('option-id');
-                        var infoContent = $('#option-info-' + optionId, infoContainerIdentifier);
+                        const infoTrigger = $(this);
+                        const optionWrapper = infoTrigger.closest('.field-wrapper');
+                        const optionId = optionWrapper.data('option-id');
+                        const infoContent = $('#option-info-' + optionId, infoContainerIdentifier);
 
                         if (infoContent.length > 0) {
                             infoTrigger.addClass('product-option-info-trigger');
@@ -69,22 +69,22 @@ define([
                 });
 
                 $('div.field select', elementIdentifier).each(function() {
-                    var optionSelectElement = $(this);
-                    var optionWrapper = optionSelectElement.closest('.field-wrapper');
-                    var optionId = optionWrapper.data('option-id');
+                    const optionSelectElement = $(this);
+                    const optionWrapper = optionSelectElement.closest('.field-wrapper');
+                    const optionId = optionWrapper.data('option-id');
 
                     optionSelectElement.on('select2:open', function (event) {
-                        var select = $(event.target);
+                        const select = $(event.target);
 
                         setTimeout(function(){
                             select.parent().find('.select2-container .select2-results ul li').each(function() {
-                                var optionValueElement = $(this);
-                                var optionElementId = optionValueElement.data('select2-id');
+                                const optionValueElement = $(this);
+                                const optionElementId = optionValueElement.data('select2-id');
 
                                 if (optionElementId.indexOf('result') !== -1) {
-                                    var optionValueId = optionElementId.substring(optionElementId.lastIndexOf('-') + 1);
+                                    const optionValueId = optionElementId.substring(optionElementId.lastIndexOf('-') + 1);
 
-                                    var infoContent = $('#option-value-info-' + optionId + '-' + optionValueId,
+                                    const infoContent = $('#option-value-info-' + optionId + '-' + optionValueId,
                                         infoContainerIdentifier);
 
                                     if (infoContent.length > 0) {
@@ -120,25 +120,25 @@ define([
                 });
 
                 $('div.field div.options-list div.field.choice', elementIdentifier).each(function() {
-                    var optionSelectElement = $(this);
-                    var optionWrapper = optionSelectElement.closest('.field-wrapper');
-                    var optionId = optionWrapper.data('option-id');
+                    const optionSelectElement = $(this);
+                    const optionWrapper = optionSelectElement.closest('.field-wrapper');
+                    const optionId = optionWrapper.data('option-id');
 
                     if (optionId) {
-                        var optionValueId = null;
+                        let optionValueId = null;
 
-                        var radioButtonElement = optionSelectElement.find('input[type="radio"]');
+                        const radioButtonElement = optionSelectElement.find('input[type="radio"]');
                         if (radioButtonElement.length > 0) {
                             optionValueId = radioButtonElement.val();
                         }
 
-                        var checkboxButtonElement = optionSelectElement.find('input[type="checkbox"]');
+                        const checkboxButtonElement = optionSelectElement.find('input[type="checkbox"]');
                         if (checkboxButtonElement.length > 0) {
                             optionValueId = checkboxButtonElement.val();
                         }
 
                         if (optionValueId) {
-                            var infoContent = $('#option-value-info-' + optionId + '-' + optionValueId,
+                            const infoContent = $('#option-value-info-' + optionId + '-' + optionValueId,
                                 infoContainerIdentifier);
 
                             if (infoContent.length > 0) {
