@@ -1,11 +1,18 @@
 {
     "name": "infrangible/m2-catalog-product-option-info",
-    "description": "Infrangible Magento 2 Catalog Product Option Info",
+    "description": "Shows an info box with headline, text and image when shoppers hover over a custom option or one of its values on the product page.",
     "type": "magento2-module",
     "version": "1.6.1",
     "license": "MIT",
     "keywords": [
-        "Magento"
+        "Magento",
+        "Magento 2",
+        "Adobe Commerce",
+        "Product options",
+        "Content",
+        "tooltip for custom options",
+        "info box for option values",
+        "option hover information"
     ],
     "homepage": "https://github.com/infrangible-dev/m2-catalog-product-option-info",
     "authors": [
